@@ -9,9 +9,13 @@ spring:
     url: jdbc:mysql://106.12.211.109:3306/cloud?characterEncoding=utf8
     username: root
     password: root
-  devtools:
-    restart:
-      enabled: true #是否支持热部署
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+#      defaultZone: http://127.0.0.1:7001/eureka/ # 底板 人3
+      defaultZone: http://eureka7002.com:7002/eureka/, http://eureka7001.com:7001/eureka/
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.teng.springcloud.entities  #所有entity别名所在包

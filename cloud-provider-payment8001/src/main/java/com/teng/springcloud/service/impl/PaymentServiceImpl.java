@@ -3,7 +3,6 @@ package com.teng.springcloud.service.impl;
 import com.teng.springcloud.dao.PaymentDao;
 import com.teng.springcloud.entities.Payment;
 import com.teng.springcloud.service.PaymentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

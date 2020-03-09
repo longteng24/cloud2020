@@ -4,8 +4,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import springcloud.entities.CommonResult;
-import springcloud.entities.Payment;
+import com.teng.springcloud.entities.CommonResult;
+import com.teng.springcloud.entities.Payment;
 
 import javax.annotation.Resource;
 
