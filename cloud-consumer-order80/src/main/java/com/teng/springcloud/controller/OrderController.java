@@ -1,4 +1,4 @@
-package springcloud.controller;
+package  com.teng.springcloud.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +17,8 @@ import javax.annotation.Resource;
  **/
 @RestController
 public class OrderController {
-    private final static String PAYMENT_URL = "http://localhost:8001";
+    //    private final static String PAYMENT_URL = "http://localhost:8001";
+    private final static String PAYMENT_URL = "http://cloud-payment-service";
     @Resource
     private RestTemplate restTemplate;
 

@@ -5,11 +5,7 @@ import com.teng.springcloud.entities.Payment;
 import com.teng.springcloud.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @ClassName: PaymentController
@@ -24,8 +20,7 @@ public class PaymentController {
     private PaymentService paymentService;
     @Value("${server.port}")
     private String serverPort;
-    @Autowired
-    private DiscoveryClient discoveryClient;
+
     @PostMapping("/create")
     public CommonResult create(@RequestBody Payment payment) {
         int result = paymentService.create(payment);
@@ -48,17 +43,5 @@ public class PaymentController {
             return new CommonResult(444, "没有对应记录", null);
         }
     }
-    @GetMapping(value = "/discovery")
-    public Object discovery(){
-        List<String> services = discoveryClient.getServices();
-        String info = "";
-        for (String service : services) {
-             info="element:   "+service +"\n";
-        }
-        //info += this.discoveryClient;
-
-        return  this.discoveryClient;
-    }
-
 }
 
