@@ -1,5 +1,6 @@
 package  com.teng.springcloud.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +30,16 @@ public class OrderController {
     @GetMapping("/consumer/payment/create")
     public CommonResult<Payment> create(Payment  payment) {
         return restTemplate.postForObject(PAYMENT_URL + "/payment/create",payment,CommonResult.class);
+    }
+    @GetMapping("/consumer/payment/getForEntity/{id}")
+    public CommonResult<Payment> getPaymentById2(@PathVariable("id") Long id) {
+        ResponseEntity<CommonResult> forEntity = restTemplate.getForEntity(PAYMENT_URL + "/payment/get/" + id, CommonResult.class, id);
+        if (forEntity.getStatusCode().is2xxSuccessful()) {
+            return forEntity.getBody();
+        } else {
+            return new CommonResult(4444, "操作失败");
+        }
+
     }
 
 }
