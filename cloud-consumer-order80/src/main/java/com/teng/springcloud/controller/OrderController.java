@@ -1,5 +1,9 @@
-package  com.teng.springcloud.controller;
+package com.teng.springcloud.controller;
 
+import com.teng.springcloud.lb.LoadBalancer;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +13,7 @@ import com.teng.springcloud.entities.CommonResult;
 import com.teng.springcloud.entities.Payment;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @ClassName: OrderController
@@ -22,15 +27,20 @@ public class OrderController {
     private final static String PAYMENT_URL = "http://cloud-payment-service";
     @Resource
     private RestTemplate restTemplate;
-
+    @Resource
+    private LoadBalancer loadBalancer;
+    @Resource
+    private DiscoveryClient discoveryClient;
     @GetMapping("/consumer/payment/get/{id}")
     public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id) {
-        return restTemplate.getForObject(PAYMENT_URL + "/payment/get/" + id,CommonResult.class,id);
+        return restTemplate.getForObject(PAYMENT_URL + "/payment/get/" + id, CommonResult.class, id);
     }
+
     @GetMapping("/consumer/payment/create")
-    public CommonResult<Payment> create(Payment  payment) {
-        return restTemplate.postForObject(PAYMENT_URL + "/payment/create",payment,CommonResult.class);
+    public CommonResult<Payment> create(Payment payment) {
+        return restTemplate.postForObject(PAYMENT_URL + "/payment/create", payment, CommonResult.class);
     }
+
     @GetMapping("/consumer/payment/getForEntity/{id}")
     public CommonResult<Payment> getPaymentById2(@PathVariable("id") Long id) {
         ResponseEntity<CommonResult> forEntity = restTemplate.getForEntity(PAYMENT_URL + "/payment/get/" + id, CommonResult.class, id);
@@ -41,5 +51,13 @@ public class OrderController {
         }
 
     }
-
+    @GetMapping("/consumer/payment/getlb")
+    public String getLb() {
+        List<ServiceInstance> instances = discoveryClient.getInstances("cloud-payment-service");
+        if (instances == null || instances.size() <= 0) {
+            return "未找到该服务";
+        }
+        ServiceInstance instances1 = loadBalancer.instances(instances);;
+        return restTemplate.getForObject(instances1.getUri()+"/payment/lb", String.class);
+    }
 }

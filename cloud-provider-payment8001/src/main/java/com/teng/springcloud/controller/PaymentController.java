@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @ClassName: PaymentController
@@ -59,6 +60,28 @@ public class PaymentController {
 
         return  this.discoveryClient;
     }
+    @GetMapping(value = "/lb")
+    public String getLoadBalance(){
 
+
+        return  serverPort;
+    }
+    /**
+     *功能描述  超时测试
+     * @author teng
+     * @date 2020/3/11
+     * @param  * @param
+     * @return java.lang.String
+     */
+    @GetMapping(value = "/feign/timeout")
+    public String gettimeout(){
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return  serverPort;
+    }
 }
 
