@@ -35,5 +35,11 @@ public class PaymentController {
         String result=paymentService.paymentInfo_Timeout(id);
         return result;
     }
+    /*服务熔断测试*/
+    @GetMapping("/hystrix/circuitBreaker/{id}")
+    String paymentCircuitBreaker(@PathVariable("id")Integer id){
+        String result=paymentService.paymentCircuitBreaker(id);
+        return result;
+    }
 }
 
