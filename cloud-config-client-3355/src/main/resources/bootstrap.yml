@@ -1,0 +1,17 @@
+server:
+  port: 3355 #服务端口
+
+spring:
+  application:
+    name: config-client #\u670D\u52A1\u540D
+  cloud:
+    config:
+      label: master
+      name: config
+      profile: prod
+      uri: http://localhost:3344
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka/ # \u5E95\u677F \u4EBA3
+      #  defaultZone: http://eureka7002.com:7002/eureka/, http://eureka7001.com:7001/eureka/
