@@ -1,0 +1,22 @@
+server:
+  port: 3344 #服务端口
+
+spring:
+  application:
+    name: cloud-config-center #服务名
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/longteng24/SpringcloudConfig.git
+          search-paths:
+            - respo
+      label: master
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+           defaultZone: http://127.0.0.1:7001/eureka/ # 底板 人3
+      #  defaultZone: http://eureka7002.com:7002/eureka/, http://eureka7001.com:7001/eureka/
